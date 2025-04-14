@@ -9,9 +9,6 @@ IMG_WIDTH=30
 IMG_HEIGHT=30
 
 
-regularizer_strength=0.0001
-dropout_rate=0
-
 def kernel_visualization():
     '''
     load a good model and visualize its first layer given a manual input of some picture
