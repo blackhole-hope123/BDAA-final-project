@@ -16,7 +16,7 @@ def main():
     y_test = tf.keras.utils.to_categorical(y_test)
 
     # a possible range of dropout_rates and regularizer_strengths for overfitting
-    dropout_rate=0.6
+    dropout_rate=0.4
     regularizer_strength=0.1
 
     model = get_model(dropout_rate,regularizer_strength, batch_normalization=True)
