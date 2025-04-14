@@ -51,6 +51,7 @@ def kernel_visualization():
         file_name=f"feature_map_{i}.png"
         output_path=os.path.join(output_folder, file_name)
         cv2.imwrite(output_path, grey_img)
+    print("image generated.")
 
 
 def feature_map_to_image(feature_map):
