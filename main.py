@@ -29,8 +29,11 @@ def main():
     # save the model to a file
     if len(sys.argv) == 2:
         filename = sys.argv[1]
-        model.save(filename)
-        print(f"Model saved to {filename}.")
+        model_folder="results/Model"
+        os.makedirs(model_folder, exist_ok=True)
+        model_path=os.path.join(model_folder, filename)
+        model.save(model_path)
+        print(f"Model saved to {model_path}.")
 
 if __name__ == "__main__":
     main()
