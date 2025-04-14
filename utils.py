@@ -81,10 +81,10 @@ def data_preprocessing(x_train,x_test):
 
 def get_model(regularizer_strength,dropout_rate, batch_normalization):
     model = tf.keras.models.Sequential([
-        tf.keras.layers.Conv2D(32, (3, 3), activation="relu", kernel_initializer='he_normal', kernel_regularizer=tf.keras.regularizers.l2(regularizer_strength), input_shape=(IMG_WIDTH, IMG_HEIGHT, 3)),
-        tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
+        tf.keras.layers.Conv2D(32, (3, 3),  padding="same", activation="relu", kernel_initializer='he_normal', kernel_regularizer=tf.keras.regularizers.l2(regularizer_strength), input_shape=(IMG_WIDTH, IMG_HEIGHT, 3)),
         *([tf.keras.layers.BatchNormalization()] if batch_normalization else []),
-        tf.keras.layers.Conv2D(64, (3, 3), activation="relu", kernel_regularizer=tf.keras.regularizers.l2(regularizer_strength), kernel_initializer='he_normal'),
+        tf.keras.layers.Conv2D(64, (3, 3), activation="relu",  padding="same", kernel_regularizer=tf.keras.regularizers.l2(regularizer_strength), kernel_initializer='he_normal'),
+        tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
         tf.keras.layers.Flatten(),
         *([tf.keras.layers.BatchNormalization()] if batch_normalization else []),
         tf.keras.layers.Dense(128, activation="relu", kernel_initializer='he_normal', kernel_regularizer=tf.keras.regularizers.l2(regularizer_strength)),
