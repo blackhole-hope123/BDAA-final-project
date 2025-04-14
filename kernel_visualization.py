@@ -38,7 +38,7 @@ def kernel_visualization():
         for i in range(30):
             for j in range(30):
                V[i,j,k] = np.sum(padded_img[i:i+3,j:j+3,:] * filters[:,:,:,k]) + bias[k]
-    V=cv2.resize(V, (width, height,num_of_filters))
+    V=cv2.resize(V, (width, height))
 
 
     for i in range(num_of_filters):
@@ -46,7 +46,7 @@ def kernel_visualization():
         image_array = feature_map_to_image(fmap)
         # as the output numpy array is only 2D for each filter, make R=G=B to create a grey image
         grey_img = np.stack([image_array]*3, axis=-1)
-        output_folder="results/A visalization"
+        output_folder="results/A visualization"
         os.makedirs(output_folder, exist_ok=True)
         file_name=f"feature_map_{i}.png"
         output_path=os.path.join(output_folder, file_name)
