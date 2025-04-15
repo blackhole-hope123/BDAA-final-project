@@ -38,12 +38,12 @@ def load_train_and_test_data(data_dir):
     files=set([f for f in os.listdir(data_dir)])
     if test in files:
         test_label_path=os.path.join(data_dir,test)
-        x_train,y_train=load_data(data_dir,test_label_path)
+        x_test,y_test=load_data(data_dir,test_label_path)
     else:
         raise Exception("Test labels are not available")
     if train in files:
         train_label_path=os.path.join(data_dir,train)
-        x_test,y_test=load_data(data_dir,train_label_path)
+        x_train,y_train=load_data(data_dir,train_label_path)
     else:
         raise Exception("Training labels are not available")
     return (x_train,y_train,x_test,y_test)
