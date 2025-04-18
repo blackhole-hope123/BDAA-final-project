@@ -3,11 +3,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 from utils import get_model, load_train_and_test_data, data_preprocessing
 EPOCHS = 10
-
+IMG_WIDTH=30
+IMG_HEIGHT=30
   
 def data_preprocessing_and_batch_normalization():
     # load the train and test data
-    x_train, y_train, x_test, y_test = load_train_and_test_data("data")
+    x_train, y_train, x_test, y_test = load_train_and_test_data("data",img_width=IMG_WIDTH, img_height=IMG_HEIGHT)
     x_train, y_train, x_test, y_test = np.array(x_train), np.array(y_train), np.array(x_test), np.array(y_test)
     data_pres, batch_nors=[True,False], [True,False]
     
@@ -26,7 +27,7 @@ def data_preprocessing_and_batch_normalization():
             else:
                 x_train1, x_test1 = x_train, x_test
 
-            model = get_model(dropout_rate,regularizer_strength, batch_normalization=batch_nors[i])
+            model = get_model(dropout_rate,regularizer_strength, batch_normalization=batch_nors[i], img_width=IMG_WIDTH, img_height=IMG_HEIGHT)
 
             model.fit(x_train1, y_train, epochs=EPOCHS, batch_size=32, shuffle=False)
 

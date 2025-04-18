@@ -1,5 +1,4 @@
-
-# BDAA project: Identifying traffic signs with CNN
+# BDAA project: identifying traffic signs with CNN
 
 ## Description
 

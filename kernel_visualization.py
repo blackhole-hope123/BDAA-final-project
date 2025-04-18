@@ -9,6 +9,9 @@ IMG_WIDTH=30
 IMG_HEIGHT=30
 
 
+regularizer_strength=0.0001
+dropout_rate=0
+
 def kernel_visualization():
     '''
     load a good model and visualize its first layer given a manual input of some picture
@@ -46,7 +49,7 @@ def kernel_visualization():
         image_array = feature_map_to_image(fmap)
         # as the output numpy array is only 2D for each filter, make R=G=B to create a grey image
         grey_img = np.stack([image_array]*3, axis=-1)
-        output_folder="results/A visualization"
+        output_folder="results/A visalization"
         os.makedirs(output_folder, exist_ok=True)
         file_name=f"feature_map_{i}.png"
         output_path=os.path.join(output_folder, file_name)
@@ -60,3 +63,6 @@ def feature_map_to_image(feature_map):
     '''
     normalized = cv2.normalize(feature_map, None, 0, 255, cv2.NORM_MINMAX)
     return normalized.astype(np.uint8)
+
+if __name__ == "__main__":
+    kernel_visualization()

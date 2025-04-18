@@ -11,18 +11,17 @@ import numpy as np
 import tensorflow as tf
 
 num_of_categories=43
-IMG_WIDTH=30
-IMG_HEIGHT=30
+
 
 # a method suitable for both train data and test data loading
-def load_data(data_dir, csv_file_path):
+def load_data(data_dir, csv_file_path, img_width, img_height):
     images,labels=[],[]
     df=pd.read_csv(csv_file_path)
     df=df[["ClassId","Path"]]
     for row in df.itertuples():
         image_path=os.path.join(data_dir, row.Path)
         image = cv2.imread(image_path)
-        resized_image = cv2.resize(image, (IMG_WIDTH, IMG_HEIGHT))
+        resized_image = cv2.resize(image, (img_width, img_height))
         images.append(resized_image)
         labels.append(int(row.ClassId))
         '''print(images)
@@ -33,17 +32,17 @@ def load_data(data_dir, csv_file_path):
     return (images,labels)
 
 # for loading the test and training data
-def load_train_and_test_data(data_dir):
+def load_train_and_test_data(data_dir, img_width, img_height):
     train,test="Train.csv","Test.csv"
     files=set([f for f in os.listdir(data_dir)])
     if test in files:
-        test_label_path=os.path.join(data_dir,test)
-        x_test,y_test=load_data(data_dir,test_label_path)
+        test_label_path=os.path.join(data_dir, test)
+        x_test,y_test=load_data(data_dir, test_label_path, img_width, img_height)
     else:
         raise Exception("Test labels are not available")
     if train in files:
-        train_label_path=os.path.join(data_dir,train)
-        x_train,y_train=load_data(data_dir,train_label_path)
+        train_label_path=os.path.join(data_dir, train)
+        x_train,y_train=load_data(data_dir, train_label_path, img_width, img_height)
     else:
         raise Exception("Training labels are not available")
     return (x_train,y_train,x_test,y_test)
@@ -79,11 +78,11 @@ def data_preprocessing(x_train,x_test):
     return (x_train_processed,x_test_processed)
 
 
-def get_model(regularizer_strength,dropout_rate, batch_normalization):
+def get_model(regularizer_strength,dropout_rate, batch_normalization, img_width, img_height):
     model = tf.keras.models.Sequential([
-        tf.keras.layers.Conv2D(32, (3, 3),  padding="same", activation="relu", kernel_initializer='he_normal', kernel_regularizer=tf.keras.regularizers.l2(regularizer_strength), input_shape=(IMG_WIDTH, IMG_HEIGHT, 3)),
+        tf.keras.layers.Conv2D(32, (3, 3), activation="relu", padding="same", kernel_initializer='he_normal', kernel_regularizer=tf.keras.regularizers.l2(regularizer_strength), input_shape=(img_width, img_height, 3)),
         *([tf.keras.layers.BatchNormalization()] if batch_normalization else []),
-        tf.keras.layers.Conv2D(64, (3, 3), activation="relu",  padding="same", kernel_regularizer=tf.keras.regularizers.l2(regularizer_strength), kernel_initializer='he_normal'),
+        tf.keras.layers.Conv2D(64, (3, 3), activation="relu", padding="same", kernel_initializer='he_normal', kernel_regularizer=tf.keras.regularizers.l2(regularizer_strength)),
         tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
         tf.keras.layers.Flatten(),
         *([tf.keras.layers.BatchNormalization()] if batch_normalization else []),
